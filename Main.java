@@ -69,7 +69,7 @@ class Main {
                                 System.out.println("No solution found.");
                             }
                         } else {
-                            HashMap<Integer, String> time = readFromFile("C:\\Users\\kleij\\IdeaProjects\\N-Queen Problem\\src\\time.txt");
+                            HashMap<Integer, String> time = readFromFile("time.txt");
                             int key;
                             while (true) {
                                 try {
