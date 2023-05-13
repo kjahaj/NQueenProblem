@@ -6,9 +6,11 @@ import java.io.IOException;
 class Main {
 
     public static void main(String[] args) {
-      userInterface();
+      userInterface(); //Calling the function of the interface
     }
 
+
+    //This function makes the logic of the project. Its try catch logic to stop the user for imputing letters when you need numbers or numbers out of bound
     public static void userInterface() {
         System.out.println("                                                      \033[34mWelcome user!\033[0m");
         System.out.println("                                                   \033[91mREAD BEFORE PLAYING\033[0m");
@@ -69,7 +71,7 @@ class Main {
                                 System.out.println("No solution found.");
                             }
                         } else {
-                            HashMap<Integer, String> time = readFromFile("C:\\Users\\kleij\\IdeaProjects\\N-Queen Problem\\src\\time.txt");
+                            HashMap<Integer, String> time = readFromFile("time.txt");
                             int key;
                             while (true) {
                                 try {
@@ -108,14 +110,17 @@ class Main {
 
     public static List<int[][]> solveNQueens(int[][] board, int col, int n) {
         List<int[][]> solutions = new ArrayList<>();
+        //base case
         if (col >= n) {
-            solutions.add(copyBoard(board));
-        } else {
+            solutions.add(copyBoard(board));         //copies a board since we need to find all the solutions of the same board
+        }
+        //recursive case
+        else {
             for (int row = 0; row < n; row++) {
-                if (isSafe(board, row, col, n)) {
-                    board[row][col] = 1;
+                if (isSafe(board, row, col, n)) { 
+                    board[row][col] = 1; //sets the queen
                     solutions.addAll(solveNQueens(board, col+1, n));
-                    board[row][col] = 0;
+                    board[row][col] = 0; //if it's safe but doesn't give a solution
                 }
             }
         }
@@ -124,16 +129,19 @@ class Main {
     }
 
     public static boolean isSafe(int[][] board, int row, int col, int n) {
+        //checks if there is a queen in the row
         for (int i = 0; i < col; i++) {
             if (board[row][i] == 1) {
                 return false;
             }
         }
+        //checks if there is a queen on the top left diagonal
         for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
             if (board[i][j] == 1) {
                 return false;
             }
         }
+        //checks if there is a queen on the bottom left diagonal
         for (int i = row, j = col; i < n && j >= 0; i++, j--) {
             if (board[i][j] == 1) {
                 return false;
@@ -160,6 +168,7 @@ class Main {
     }
     public static HashMap<Integer, String> readFromFile(String fileName) {
         HashMap<Integer, String> map = new HashMap<>();
+        //reads from file which had previously stored statistics
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             int key = 1;
@@ -170,7 +179,6 @@ class Main {
         } catch (IOException e) {
             throw new RuntimeException("Error reading file: " + fileName, e);
         }
-
         return map;
     }
 }
